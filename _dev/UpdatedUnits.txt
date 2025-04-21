@@ -1,45 +1,8 @@
-/*
-	data.js
-	contains all of the program constants, the unit database, and database of prefixes
-*/
-
-//program constants
-const csts  = {
-	R: 8.3144598, //[J/K/mol]
-	TC0: 273.15, //[K]
-	TF0: 459.67*5/9, //[K]
-	atm: 101325, //[Pa]
-	mile: 1609.344, //[m]
-	bbl: 158.987294928e-3, //[m3]
-	q: 1.6021766208e-19, //[C]
-	BTU: 1055.05585, //[J]
-	APIk: 141.5e3, //[1]
-	APIq: -131.5, //[m3/kg]
-	sat2btc: 1e-8,
-	dTnote: {cz: 'Viz °C pro důležitou poznámku.', en: 'See °C for an important note.'},
-	Hgnote: {cz: 'Mezi mmHg a Torr je nepatrný rozdíl.', en: 'There is a negligible difference between mmHg and Torr.'}
-};
-
-/*
-Units object is the database of all known units.
-	v: [m,kg,s,A,K,mol,cd,$]      represents the vector of powers of basic units, for example N=kg*m/s^2, therefore v = [1,1,-2,0,0,0,0]
-	id: string                    something unique. You can use the UnitConflicts() global function to detect possible id conflicts
-	alias: array                  array of strings - other ids that reference the unit
-	name: object                  defines full name or even a short description for every language mutation
-	k: number                     this coeficient equates value of the unit in basic units. For example minute = 60 seconds, therefore min.k = 60
-	SI: true/false                self-explanatory. This attribute doesn't really do anything, it's merely informational. Perhaps it's redundant, since all SI derived units have k = 1
-	basic: true/false             whether it's basic SI unit or derived SI. Basic SI units are of utmost importance to the code, don't ever change them!
-	prefix: all/+/-/undefined     it means: all prefixes allowed / only bigger than one allowed / lesser than one / prefixes disallowed. It's not really a restriction, just a recommendation.
-	constant: true/undefined      whether it is a constant. If true, attributes SI, basic and prefix are ignored. Prefix is disallowed.
-	note: a note that conveys anything important beyond description - what is noteworthy or weird about this unit or its usage. Implemented as an object of strings for all language mutations.
-*/
-
-const Units = [
 	//EIGHT BASIC UNITS
 	{v: [1,0,0,0,0,0,0,0], id: 'm', name: {cz: 'metr', en: 'metre', ae: 'meter'}, k:1, SI: true, basic: true, prefix: 'all'},
 	{v: [0,1,0,0,0,0,0,0], id: 'kg', name: {cz: 'kilogram', en: 'kilogram', ae: 'kilogram'}, k:1, SI: true, basic: true, note: {
 		cz: 'To protože kilogram se obtížně programuje, neboť samo "kilo" je předpona. Proto jsem definoval také gram jako odvozenou jednotku SI, která může mít jakékoliv předpony.',
-		en: 'That is because kilogram is problematic to code, since the "kilo" itself is a prefix. Therefore I have also defined gram as a derived SI unit, which can have all prefixes.'}},
+		en: 'That\', ae: 'That\'s because kilogram is problematic to code, since the "kilo" itself is a prefix. Therefore I have also defined gram as a derived SI unit, which can have all prefixes.'}},
 	{v: [0,0,1,0,0,0,0,0], id: 's', name: {cz: 'sekunda', en: 'second', ae: 'second'}, k:1, SI: true, basic: true, prefix: '-'},
 	{v: [0,0,0,1,0,0,0,0], id: 'A', name: {cz: 'ampér', en: 'ampere', ae: 'ampere'}, k:1, SI: true, basic: true, prefix: 'all'},
 	{v: [0,0,0,0,1,0,0,0], id: 'K', name: {cz: 'kelvin', en: 'kelvin', ae: 'kelvin'}, k:1, SI: true, basic: true, prefix: 'all'},
@@ -203,80 +166,11 @@ const Units = [
 	{v: [-3,-1,4,2,0,0,0,0], id: '_E', name: {cz: 'permitivita vakua', en: 'vacuum permittivity', ae: 'vacuum permittivity'}, k:8.854187817e-12, constant: true},
 	{v: [0,0,1,1,0,0,0,0], id: '_q', name: {cz: 'elementární náboj', en: 'elementary charge', ae: 'elementary charge'}, k:csts.q, constant: true},
 	{v: [0,0,0,0,0,-1,0,0], id: '_NA', name: {cz: 'Avogadrova konstanta', en: 'Avogadro constant', ae: 'Avogadro constant'}, k:6.02214085e23, constant: true},
-	{v: [0,0,0,0,0,0,0,0], id: '_pi', alias:['π'], name: {cz: 'Ludolfovo číslo', en: 'Archimedes\' constant', ae: 'Archimedes\' constant'}, k:Math.PI, constant: true},
-	{v: [0,0,0,0,0,0,0,0], id: '_e', name: {cz: 'Eulerovo číslo', en: 'Euler\s number', ae: 'Euler\'s number'}, k:Math.E, constant: true},
+	{v: [0,0,0,0,0,0,0,0], id: '_pi', alias:['π'], name: {cz: 'Ludolfovo číslo', en: 'Archimedes\', ae: 'Archimedes\' constant'}, k:Math.PI, constant: true},
+	{v: [0,0,0,0,0,0,0,0], id: '_e', name: {cz: 'Eulerovo číslo', en: 'Euler\', ae: 'Euler\'s number'}, k:Math.E, constant: true},
 
 
 
 	//special for Unitfuns, unusable without {}
 	{v: [3,-1,0,0,0,0,0,0], id: 'API', alias:['°API'], name: {cz: 'API hustota', en: 'API density', ae: 'API density'}, k:1/141.5e3, onlyUnitfuns: true}, //theoretically, without {} API = specific volume unit
 	{v: [0,0,0,0,0,0,0,0], id: 'ln', alias:['log'], name: {cz: 'Přirozený logaritmus', en: 'Natural logarithm', ae: 'Natural logarithm'}, k:NaN, onlyUnitfuns: true}
-];
-
-//unitfuns - irregular units that have a conversion function instead of mere ratio
-//{id: link to regular unit, f: function UF => SI, fi: inverse function SI => UF, v: SI dimension (output when f, input when fi)}
-const Unitfuns = [
-	{id: '°C', f: UF => UF + csts.TC0, fi: SI => SI - csts.TC0, v: [0,0,0,0,1,0,0,0]},
-	{id: '°F', f: UF => 5/9*UF + csts.TF0, fi: SI => 9/5*(SI - csts.TF0), v: [0,0,0,0,1,0,0,0]},
-	{id: '°Re', f: UF => 1.25*UF + csts.TC0, fi: SI => 0.8*(SI - csts.TC0), v: [0,0,0,0,1,0,0,0]},
-	{id: 'API', f: UF => csts.APIk/(UF - csts.APIq), fi: SI => csts.APIk/SI + csts.APIq, v: [-3,1,0,0,0,0,0,0]},
-	{id: 'ln', f: UF => Math.log(UF), fi: SI => {throw '🏆 '+langService.trans('ERR_Secret');}, v: [0,0,0,0,0,0,0,0]}
-];
-
-//currencies - their conversion ratio to dollar is unknown and will be obtained by currencies.php
-//k and v will be filled later (v is always the same, k is obtained from API)
-const Currencies = [
-	{id: 'EUR', alias:['€'], name: {cz: 'euro', en: 'Euro'}},
-	{id: 'AED', name: {cz: 'dirham Spojených arabských emirátů', en: 'United Arab Emirates Dirham'}},
-	{id: 'ARS', name: {cz: 'argentinské peso', en: 'Argentine Peso'}},
-	{id: 'AUD', name: {cz: 'australský dolar', en: 'Australian Dollar'}},
-	{id: 'BGN', name: {cz: 'bulharský lev', en: 'Bulgarian Lev'}},
-	{id: 'BRL', name: {cz: 'braziliský real', en: 'Brazilian Real'}},
-	{id: 'CAD', name: {cz: 'kanadský dolar', en: 'Canadian Dollar'}},
-	{id: 'CHF', name: {cz: 'švýcarský frank', en: 'Swiss Franc'}},
-	{id: 'CNY', name: {cz: 'čínský juan', en: 'Chinese Yuan'}},
-	{id: 'CZK', alias:['Kč'], name: {cz: 'česká koruna', en: 'Czech Republic Koruna'}},
-	{id: 'DKK', name: {cz: 'dánská koruna', en: 'Danish Krone'}},
-	{id: 'GBP', alias:['£'], name: {cz: 'britská libra', en: 'British Pound Sterling'}},
-	{id: 'HKD', name: {cz: 'hongkongský dolar', en: 'Hong Kong Dollar'}},
-	{id: 'HRK', name: {cz: 'chorvatská kuna', en: 'Croatian Kuna'}},
-	{id: 'HUF', name: {cz: 'maďarský forint', en: 'Hungarian Forint'}},
-	{id: 'IDR', name: {cz: 'indonéská rupie', en: 'Indonesian Rupiah'}},
-	{id: 'ILS', name: {cz: 'nový izraelský šekel', en: 'Israeli New Sheqel'}},
-	{id: 'INR', name: {cz: 'indická rupie', en: 'Indian Rupee'}},
-	{id: 'JPY', alias: ['¥'], name: {cz: 'japonský jen', en: 'Japanese Yen'}},
-	{id: 'KRW', name: {cz: 'jihokorejský won', en: 'South Korean Won'}},
-	{id: 'MXN', name: {cz: 'mexické peso', en: 'Mexican Peso'}},
-	{id: 'NOK', name: {cz: 'norská koruna', en: 'Norwegian Krone'}},
-	{id: 'NZD', name: {cz: 'novozélandský dolar', en: 'New Zealand Dollar'}},
-	{id: 'PLN', name: {cz: 'polský zlotý', en: 'Polish Zloty'}},
-	{id: 'RON', name: {cz: 'rumunské leu', en: 'Romanian Leu'}},
-	{id: 'RUB', name: {cz: 'ruský rubl', en: 'Russian Ruble'}},
-	{id: 'SEK', name: {cz: 'švédská koruna', en: 'Swedish Krona'}},
-	{id: 'SGD', name: {cz: 'singapurský dolar', en: 'Singapore Dollar'}},
-	{id: 'THB', name: {cz: 'thajský baht', en: 'Thai Baht'}},
-	{id: 'TRY', name: {cz: 'turecká lira', en: 'Turkish Lira'}},
-	{id: 'VND', name: {cz: 'vietnamský dong', en: 'Vietnamese Dong'}},
-	{id: 'ZAR', name: {cz: 'jihoafrický rand', en: 'South African Rand'}},
-	{id: 'BTC', alias:['₿', 'bitcoin'], name: {cz: 'bitcoin', en: 'bitcoin'}, prefix: 'all'},
-	{id: 'SAT', alias:['satoshi'], name: {cz: 'satoshi', en: 'satoshi'}, prefix: '+'}
-];
-
-//standard SI prefixes
-const Prefixes = [
-	{id: 'a', v: -18},
-	{id: 'f', v: -15},
-	{id: 'p', v: -12},
-	{id: 'n', v: -9},
-	{id: 'u', v: -6},
-	{id: 'μ', v: -6},
-	{id: 'm', v: -3},
-	{id: 'c', v: -2},
-	{id: 'd', v: -1},
-	{id: 'h', v: 2},
-	{id: 'k', v: 3},
-	{id: 'M', v: 6},
-	{id: 'G', v: 9},
-	{id: 'T', v: 12},
-	{id: 'P', v: 15}
-];
