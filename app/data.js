@@ -36,7 +36,7 @@ Units object is the database of all known units.
 
 const Units = [
 	//EIGHT BASIC UNITS
-	{v: [1,0,0,0,0,0,0,0], id: 'm', name: {cz: 'metr', en: 'metre'}, k:1, SI: true, basic: true, prefix: 'all'},
+	{v: [1,0,0,0,0,0,0,0], id: 'm', name: {cz: 'metr', en: 'metre', ae: 'meter'}, k:1, SI: true, basic: true, prefix: 'all'},
 	{v: [0,1,0,0,0,0,0,0], id: 'kg', name: {cz: 'kilogram', en: 'kilogram'}, k:1, SI: true, basic: true, note: {
 		cz: 'To protože kilogram se obtížně programuje, neboť samo "kilo" je předpona. Proto jsem definoval také gram jako odvozenou jednotku SI, která může mít jakékoliv předpony.',
 		en: 'That\'s because kilogram is problematic to code, since the "kilo" itself is a prefix. Therefore I have also defined gram as a derived SI unit, which can have all prefixes.'}},
@@ -82,15 +82,15 @@ const Units = [
 	{v: [0,0,-1,0,0,0,0,0], id: 'Rd', name: {cz: 'rutherford', en: 'rutherford'}, k:1e6, SI: true, prefix: 'all'},
 	{v: [2,0,-2,0,0,0,0,0], id: 'Gy', name: {cz: 'gray', en: 'gray'}, k:1, SI: true, prefix: 'all'},
 	{v: [2,0,-2,0,0,0,0,0], id: 'Sv', name: {cz: 'sievert', en: 'sievert'}, k:1, SI: true, prefix: 'all'},
-	{v: [-1,0,0,0,0,0,0,0], id: 'dpt', name: {cz: 'dioptrie', en: 'dioptre'}, k:1, SI: true},
+	{v: [-1,0,0,0,0,0,0,0], id: 'dpt', name: {cz: 'dioptrie', en: 'dioptre', ae: 'diopter'}, k:1, SI: true},
 
 
 
 	//non-SI
-	{v: [0,0,0,0,0,1,0,0], id: 'Nm3', alias:['Ncm'], name: {cz: 'normální krychlový metr', en: 'normal cubic metre'}, k:csts.atm/csts.TC0/csts.R, note: {
+	{v: [0,0,0,0,0,1,0,0], id: 'Nm3', alias:['Ncm'], name: {cz: 'normální krychlový metr', en: 'normal cubic metre', ae: 'normal cubic meter'}, k:csts.atm/csts.TC0/csts.R, note: {
 		cz: 'Definován při 0°C a 1 atm. Navzdory názvu je Nm3 jednotkou látkového množství, nikoliv objemu.',
 		en: 'Defined at 0°C and 1 atm. Despite the name, Nm3 is actually amount of substance, not volume.'}},
-	{v: [0,0,0,0,0,1,0,0], id: 'Ndm3', alias:['Nl'], name: {cz: 'normální litr', en: 'normal litre'}, k:csts.atm/csts.TC0/csts.R/1000, note: {cz: 'Viz Nm3 pro vysvětlení.', en: 'See Nm3 for explanation.'}},
+	{v: [0,0,0,0,0,1,0,0], id: 'Ndm3', alias:['Nl'], name: {cz: 'normální litr', en: 'normal litre', ae: 'normal liter'}, k:csts.atm/csts.TC0/csts.R/1000, note: {cz: 'Viz Nm3 pro vysvětlení.', en: 'See Nm3 for explanation.'}},
 	{v: [0,0,0,0,0,1,0,0], id: 'SCF', name: {cz: 'normální krychlová stopa', en: 'standard cubic foot'}, k:0.028317*csts.atm/288.7/csts.R, note: {cz: 'Viz Nm3 pro vysvětlení.', en: 'See Nm3 for explanation.'}},
 
 	{v: [0,0,1,0,0,0,0,0], id: 'min', name: {cz: 'minuta', en: 'minute'}, k:60},
@@ -128,17 +128,17 @@ const Units = [
 	{v: [2,0,0,0,0,0,0,0], id: 'ac', name: {cz: 'akr', en: 'acre'}, k:4046.872},
 	{v: [2,0,0,0,0,0,0,0], id: 'darcy', name: {cz: 'darcy', en: 'darcy'}, k: 9.869233e-13},
 
-	{v: [3,0,0,0,0,0,0,0], id: 'l', name: {cz: 'litr', en: 'litre'}, k:1e-3, SI: true, prefix: 'all'},
+	{v: [3,0,0,0,0,0,0,0], id: 'l', name: {cz: 'litr', en: 'litre', ae: 'liter'}, k:1e-3, SI: true, prefix: 'all'},
 	{v: [3,0,0,0,0,0,0,0], id: 'pt', name: {cz: 'pinta', en: 'pint'}, k:568.261e-6},
-	{v: [3,0,0,0,0,0,0,0], id: 'gal', name: {cz: 'americký galon', en: 'US gallon'}, k:3.785412e-3},
+	{v: [3,0,0,0,0,0,0,0], id: 'gal', name: {cz: 'americký galon', en: 'US gallon', ae: 'gallon'}, k:3.785412e-3},
 	{v: [3,0,0,0,0,0,0,0], id: 'bsh', name: {cz: 'americký bušl', en: 'US bushel'}, k:35.2391e-3},
-	{v: [3,0,0,0,0,0,0,0], id: 'ccm', name: {cz: 'kubický centimetr', en: 'cubic centimetre'}, k:1e-6},
+	{v: [3,0,0,0,0,0,0,0], id: 'ccm', name: {cz: 'kubický centimetr', en: 'cubic centimetre', ae: 'cubic centimeter'}, k:1e-6},
 	{v: [3,0,0,0,0,0,0,0], id: 'bbl', name: {cz: 'barel ropy', en: 'oil barrel'}, k:csts.bbl, prefix: '+'},
 
 	{v: [3,0,-1,0,0,0,0,0], id: 'BPD', name: {cz: 'barel ropy za den', en: 'oil barrel per day'}, k:csts.bbl/3600/24, prefix: '+'},
 
 	{v: [0,1,0,0,0,0,0,0], id: 'g', name: {cz: 'gram', en: 'gram'}, k:1e-3, SI: true, prefix: 'all'},
-	{v: [0,1,0,0,0,0,0,0], id: 't', name: {cz: 'tuna', en: 'tonne'}, k:1000, SI: true, prefix: '+'},
+	{v: [0,1,0,0,0,0,0,0], id: 't', name: {cz: 'tuna', en: 'tonne', ae: 'metric ton'}, k:1000, SI: true, prefix: '+'},
 	{v: [0,1,0,0,0,0,0,0], id: 'gr', name: {cz: 'grain', en: 'grain'}, k:64.79891e-6},
 	{v: [0,1,0,0,0,0,0,0], id: 'oz', name: {cz: 'once', en: 'ounce'}, k:28.349523e-3},
 	{v: [0,1,0,0,0,0,0,0], id: 'ozt', name: {cz: 'trojská unce', en: 'troy ounce'}, k:31.1034768e-3},
@@ -178,7 +178,7 @@ const Units = [
 	{v: [-1,1,-2,0,0,0,0,0], id: 'atm', name: {cz: 'atmosféra', en: 'atmosphere'}, k:csts.atm, note: {
 		cz: 'Také slouží jako standardní tlak.',
 		en: 'Also serves as standard pressure.'}},
-	{v: [-1,1,-2,0,0,0,0,0], id: 'mmHg', name: {cz: 'milimetr rtuťového sloupce', en: 'millimetre of mercury'}, k:133.322387415, note: csts.Hgnote},
+	{v: [-1,1,-2,0,0,0,0,0], id: 'mmHg', name: {cz: 'milimetr rtuťového sloupce', en: 'millimetre of mercury', ae: 'millimeter of mercury'}, k:133.322387415, note: csts.Hgnote},
 	{v: [-1,1,-2,0,0,0,0,0], id: 'Torr', alias:['torr'], name: {cz: 'torr', en: 'torr'}, k:csts.atm/760, prefix: 'all', note: csts.Hgnote},
 	{v: [-1,1,-2,0,0,0,0,0], id: 'psi', name: {cz: 'libra na čtvereční palec', en: 'pound per square inch'}, k:6894.757293168362, prefix: 'all'},
 	{v: [-1,1,-2,0,0,0,0,0], id: 'inHg', name: {cz: 'palec rtuťového sloupce', en: 'inch of mercury'}, k:3386.388640341},
