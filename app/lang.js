@@ -4,8 +4,8 @@
 */
 
 const langService = {
-	langs: ['cz', 'en'],
-	alias: ['Česky', 'English'],
+	langs: ['cz', 'en', 'ae'],
+	alias: ['Česky', 'English', 'American English'],
 	default: 'cz',
 
 	//here will be the whole translate table for JS language switch, see below
